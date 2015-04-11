@@ -7,6 +7,49 @@
 
 $(document).ready(function()
 {
+
+    /*
+    import script localstorage
+     */
+
+
+   /* $('#saveEvents').click(function() {
+        console.log(JSON.stringify(events));
+        localStorage.setItem('events', JSON.stringify(events));
+    });*/
+
+    // event objects
+    function Event(id, title, start, end, allDay, description) {
+        this.id = id;
+        this.title = title;
+        this.start = start;
+        this.end = end;
+        this.allDay = allDay;
+        this.description = description;
+
+        return this;
+    }
+    function EventDto(event) {
+        this.id = event.id;
+        this.title = event.title;
+        this.start = event.start;
+        this.end = event.end;
+        this.allDay = event.allDay;
+        this.description = event.description;
+        this.color = event.color;
+
+        return this;
+    }
+    /*
+     events is the main option for calendar.
+     for demo we have added predefined events in json object.
+     */
+    var events = [
+
+    ];
+
+    var id = 1;
+
     /*
      date store today date.
      d store today date.
@@ -62,24 +105,17 @@ $(document).ready(function()
                 /*
                  after selection user will be promted for enter title for event.
                  */
-                var title = prompt('Event Title:');
-                /*
-                 if title is enterd calendar will add title and event into fullCalendar.
-                 */
-                if (title)
-                {
-                    calendar.fullCalendar('renderEvent',
-                        {
-                            title: title,
-                            start: start,
-                            end: end,
-                            allDay: allDay
-                        },
-                        true // make the event "stick"
-                    );
-                }
-                calendar.fullCalendar('unselect');
+                //var title = prompt('Event Title:');
+
+                var event = new Event(null,'Event',start,end,allDay,'');
+                editEvent(event,'New event',false);
             },
+
+            eventClick: function(event)
+            {
+                window.location.href = 'detailCours.html?event='+event.id;
+            },
+
             /*
              editable: true allow user to edit events.
              */
@@ -88,90 +124,75 @@ $(document).ready(function()
              set the first hour of each day to 8am
              TODO : see if we can set first and last hour
              */
-            firstHour: 8,
-
-
-
-
-            /*
-             events is the main option for calendar.
-             for demo we have added predefined events in json object.
-             */
-            events: [
-                {
-                    title: 'All Day Event',
-                    start: new Date(y, m, 1)
-                },
-                {
-                    title: 'Long Event',
-                    start: new Date(y, m, d-5),
-                    end: new Date(y, m, d-2)
-                },
-                {
-                    id: 999,
-                    title: 'Repeating Event',
-                    start: new Date(y, m, d-3, 16, 0),
-                    allDay: false
-                },
-                {
-                    id: 999,
-                    title: 'Repeating Event',
-                    start: new Date(y, m, d+4, 16, 0),
-                    allDay: false
-                },
-                {
-                    title: 'Meeting',
-                    start: new Date(y, m, d, 10, 30),
-                    allDay: false
-                },
-                {
-                    title: 'Lunch',
-                    start: new Date(y, m, d, 12, 0),
-                    end: new Date(y, m, d, 14, 0),
-                    allDay: false
-                },
-                {
-                    title: 'Birthday Party',
-                    start: new Date(y, m, d+1, 19, 0),
-                    end: new Date(y, m, d+1, 22, 30),
-                    allDay: false
-                },
-                {
-                    title: 'Click for Google',
-                    start: new Date(y, m, 28),
-                    end: new Date(y, m, 29),
-                    url: 'http://google.com/'
-                }
-            ]
+            firstHour: 8
         });
 
+    //localStorage.clear();
+
     var levents = localStorage.getItem('events');
+
+    //if(levents == null)
+    //    alert("no data in localstorage.");
     levents = JSON.parse(levents);
-    if(levents.length == 0) {
-        alert('Nothing in the localStorage !');
-        return;
-    }
+    levents.sort(levents.id);
     $.each(levents, function(key, event) {
+        if(event.id >= id) id = event.id+1;
         event.start = new Date(event.start);
         event.end = new Date(event.end);
         if(event.end == null)
             event.end = event.start;
-        var events = calendar.fullCalendar('clientEvents');
-        // Check if event already exist in calendar
-        if(events.length != 0) {
-            $.each(events, function(key2, event2) {
-                // If an element has the same dates of an other it's needed to have different title
-                if( (event.title != event2.title && event.start.toDateString() == event2.start.toDateString() && event.end.toDateString() == event2.end.toDateString()) || (event.start.toDateString() != event2.start.toDateString() && event.end.toDateString() != event2.end.toDateString()) )  {
-                    addDay(false, event);
-                }
-                // Remove from the current collection becoming of localstorage because you can duplicate entry
-                events.splice(key2, 1);
-            });
-        } else {
-            addDay(false, event);
-        }
+        addDay(false, event);
     });
 
+    /*
+     * EVENT FORM
+     */
+    function editEvent(event, title, state) {
+        // Transform to dialog
+        $('#dialogEditEvent').dialog({
+            modal: true,
+            title: title
+        });
+
+        // Init val of the input with the date of the clicked item
+        $('#name').val(event.title);
+
+        // Form submission
+        $('#editEvent').submit(function(e) {
+            var el = $(this),
+            title = el.find('#name').val(),
+            description = el.find('#desc').val();
+
+            if(title != '') {
+                event.title = title;
+                event.description = description;
+                event.id = id++;
+                //alert(event.id);
+                addDay(state, event);
+
+                $('#dialogEditEvent').dialog('close');
+
+                localStorage.setItem('events', JSON.stringify(events));
+
+            } else alert('Empty Fields');
+        });
+    }
+    /************************
+     calendar functions
+     ***********************/
+    // addDay Function (state : update or not)
+    function addDay(state, event) {
+        if(state == false) {
+            calendar.fullCalendar('renderEvent', event, true);
+        } else {
+            calendar.fullCalendar('updateEvent', event);
+        }
+        if(event.end == null)
+            event.end = event.start;
+        var eventDto = new EventDto(event);
+        events.push(eventDto);
+        console.log(JSON.stringify(events));
+    }
 
     /************************
           Other functions
