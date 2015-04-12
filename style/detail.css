@@ -1,0 +1,44 @@
+li {
+  display: block;
+  width: 100%;
+  min-height: 30px;
+  margin: 0 0 10px 0;
+  padding: 0 0 15px 0;
+  border-bottom: 1px dotted #C7C5C8;
+  overflow: hidden;
+}
+
+#documentColumn {
+  display: block;
+  float: left;
+  width: 450px;
+  height: 100%;
+  overflow: auto;
+}
+
+#commentColumn{
+  display: block;
+  float: right;
+  width: 450px;
+  height:100%;
+}
+
+#commentColumn ul{
+  max-height : 90%;
+  overflow:auto;
+}
+
+#commentColumn textarea{
+  width:100%;
+  overflow:auto;
+}
+
+html,body{
+	height : 99%;
+}
+#container{
+  display: block;
+  margin: auto;
+  width: 1000px;
+  height : 85%;
+}
