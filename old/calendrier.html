@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>CalBlog</title>
+
+    <!-- Jquery -->
+    <script type="text/javascript" src="./assets/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="./assets/ui/themes/ui-lightness/jquery-ui-1.10.3.custom.min.css" >
+    <script type="text/javascript" src="./assets/ui/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <!-- FullCalendar -->
+    <link type="text/css" rel="stylesheet" href="./assets/fullcalendar/fullcalendar.css" >
+    <script type="text/javascript" src="./assets/fullcalendar/fullcalendar.min.js"></script>
+
+    <!-- Calendar Gestionnary -->
+    <script type="text/javascript" src="./scripts/calendar.js"></script>
+    <script type="text/javascript" src="./scripts/ls_data.js"></script>
+
+    <style type="text/css">
+        body
+        {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        }
+        #calendar
+        {
+            width: 900px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+<!--FullCalendar container div-->
+<div id='calendar'></div>
+<!--<button id="saveEvents">Save Calendar</button>-->
+<!--Form edit-->
+<div id="dialogEditEvent" style="display: none;">
+    <form id="editEvent">
+        <p>
+            <label for="name">Event name :</label>
+            <input id="name" type="text"/>
+        </p><p>
+        <label for="desc">Small description :</label>
+        <textarea id="desc"></textarea>
+    </p><p>
+        <input type="submit"/>
+    </p>
+    </form>
+</div>
+</body>
+</html>
