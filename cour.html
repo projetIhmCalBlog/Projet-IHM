@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="style/cacou.css">
     <link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
 
+    <!-- Jquery -->
+    <script type="text/javascript" src="./assets/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="./assets/ui/themes/ui-lightness/jquery-ui-1.10.3.custom.min.css" >
+    <script type="text/javascript" src="./assets/ui/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <script type="text/javascript" src="./scripts/ls_data"></script>
+    <script type="text/javascript" src="./scripts/wall.js"></script>
 
 </head>
 <body>
@@ -41,17 +48,51 @@
     </header>
 
 
-    <div id="content">
-        <div class="newsBlock">
-            <p class="newsCmt"><a href="cour.html" class="noAstyle"><span class="username">IHM</span>Interface Homme Machine</a></p>
-            <p class="newsCmt"><a href="cour.html" class="noAstyle"><span class="username">FAA</span>Fondements de l'apprentissage automatique</a></p>
-            <p class="newsCmt"><a href="cour.html" class="noAstyle"><span class="username">M3DS</span>Modélisation 3D et synthèse</a></p>
-            <p class="newsCmt"><a href="cour.html" class="noAstyle"><span class="username">LABD</span>Langages avancés pour les bases de données</a></p>
-            <p class="newsCmt"><a href="cour.html" class="noAstyle"><span class="username">CAR</span>Construction d'applications réparties</a></p>
-            <p class="newsCmt"><a href="cour.html" class="noAstyle"><span class="username">RDF</span>Reconnaissance de formes</a></p>
+    <div id="content_half">
+        <div id="content_left">
+            <h1>Général</h1>
+            <div id="topbar"></div>
+            <div id="container">
+                <div id="documentColumn">
+                    <ul id="documentList">
+
+                    </ul>
+                </div>
+                <div id="commentColumn">
+                    <ul id="commentList">
+
+                    </ul>
+
+                    <label for="newComment">Ajouter un commentaire :</label></br>
+                    <textarea placeholder="Ecrire un commentaire" id="newComment" rows="4" style="width: 100%;"></textarea></br>
+                    <center><button id="addComment">Envoyer</button></center>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="content_right">
+            <h1>Cours du 06 avril 15</h1>
+            <div id="topbar"></div>
+            <div id="container">
+                <div id="documentColumn">
+                    <ul id="documentList">
+
+                    </ul>
+                </div>
+                <div id="commentColumn">
+                    <ul id="commentList">
+
+                    </ul>
+
+                    <label for="newComment">Ajouter un commentaire :</label></br>
+                    <textarea placeholder="Ecrire un commentaire" id="newComment" rows="4" style="width: 100%;"></textarea></br>
+                    <center><button id="addComment">Envoyer</button></center>
+
+                </div>
+            </div>
         </div>
     </div>
-
 
 
     <!-- Header script -->
